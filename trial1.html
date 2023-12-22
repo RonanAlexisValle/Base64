@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Encoder/Decoder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+      background-color: #f4f4f4;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-bottom: 20px;
+      padding: 8px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      resize: vertical;
+    }
+
+    button {
+      padding: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #output {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Base64 Encoder/Decoder</h2>
+    <form>
+      <label for="input">Enter Text:</label>
+      <textarea id="input" placeholder="Enter text to encode/decode"></textarea>
+      
+      <button type="button" onclick="processInput()" id="processButton">Encode</button>
+
+      <label for="output">Result:</label>
+      <textarea id="output" readonly></textarea>
+      <p id="priority"></p>
+    </form>
+  </div>
+
+  <script>
+      const highPriorityData = [
+      "ronan",
+      "march 11 2004",
+      "jonel123",
+      "justine",
+      "october 28 2003",
+      "camilleganda",
+      "cams",
+      "february 06 2003",
+      "ikawparin",
+      "tagaro",
+      "Arlene"
+    ];
+
+    const mediumPriorityData = [
+      "black",
+      "adobo",
+      "0311",
+      "blue",
+      "sinigang",
+      "1234",
+      "white",
+      "ginisa",
+      "9876",
+      "indigo"
+    ];
+
+    const lowPriorityData = [
+      "furreza",
+      "comedy",
+      "rose",
+      "hotdog",
+      "horror",
+      "tulips",
+      "rida",
+      "thriller",
+      "sunflower",
+      "water"
+    ];
+
+    function processInput() {
+      const inputText = document.getElementById('input').value;
+      const priorityLevel = getPriorityLevel(inputText);
+
+      if (priorityLevel === 'high') {
+        const processedText = (priorityLevel === 'high') ? btoa(inputText) : inputText;
+        document.getElementById('output').value = processedText;
+        document.getElementById('priority').innerText = `Priority Level: ${priorityLevel}`;
+      } else {
+        document.getElementById('output').value = inputText;
+        document.getElementById('priority').innerText = `Priority Level: ${priorityLevel}`;
+      }
+    }
+
+    function getPriorityLevel(text) {
+      const priorityDataset = {
+        low: lowPriorityData,
+        medium: mediumPriorityData,
+        high: highPriorityData
+      };
+
+      const words = text.split(/\s+/); // Split text into words
+
+      const lowPriorityCount = words.filter(word => priorityDataset.low.includes(word)).length;
+      const mediumPriorityCount = words.filter(word => priorityDataset.medium.includes(word)).length;
+      const highPriorityCount = words.filter(word => priorityDataset.high.includes(word)).length;
+
+      if (highPriorityCount > 0) {
+        return 'high';
+      } else if (mediumPriorityCount > 0) {
+        return 'medium';
+      } else {
+        return 'low';
+      }
+    }
+  </script>
+</body>
+</html>
